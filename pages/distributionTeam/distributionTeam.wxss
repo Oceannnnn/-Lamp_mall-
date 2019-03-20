@@ -1,0 +1,6 @@
+/* pages/distributionTeam/distributionTeam.wxss */
+.team_img{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}

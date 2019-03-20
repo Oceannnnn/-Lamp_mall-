@@ -1,0 +1,8 @@
+<!--pages/payResults/payResults.wxml-->
+<view class='flex_faj payResults'>
+  <icon wx:if="{{payResults==1}}" type="success" size="50"/>
+  <icon wx:else type="warn" size="50"/>
+  <text class='f_34 mt_20 success'>{{text}}</text>
+  <button class='s_foot mt_20' bindtap='bindtap'>返回首页</button>
+  <button class='s_foot mt_20' bindtap='back' wx:if="{{payResults == 0}}">返回上一页</button>
+</view>

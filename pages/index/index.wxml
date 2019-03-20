@@ -1,0 +1,177 @@
+<!--index.wxml-->
+<view class='main_header'>
+  <swiper indicator-dots interval="3000" duration="1000" autoplay='true' circular>
+    <block wx:for="{{imgUrls}}" wx:key="{{itemName}}" wx:for-item="itemName">
+      <swiper-item>
+        <text class='text'>{{itemName.title}}</text>
+        <image src="{{itemName.pic}}" class="slide-image"/>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<view class='flex_i text_body bor_bom'>
+  <i class="iconfont icon-gonggao mr_20 ml_20"></i>
+  <swiper interval="3000" duration="1000" autoplay='true' circular vertical>
+    <block wx:for="{{textList}}" wx:key="{{itemName}}" wx:for-item="itemName">
+      <swiper-item>
+        <text class='sheng f_32'>{{itemName.name}}</text>
+      </swiper-item>
+    </block>
+  </swiper>
+</view> 
+<view class='flex_i quick_body bor_bom'>
+  <navigator class='quick_item flex_af f_28 pr' url='../consumer/consumer'>
+    <form report-submit='true' class='formBtn' bindsubmit='bindsubmit'>
+      <button class='formBtn' form-type='submit'></button>
+    </form> 
+    <view class='mb_10 icon_item item0'>
+      <i class="iconfont icon-weibiaoti2fuzhi02"></i>
+    </view>
+    <text>领券</text>
+  </navigator>
+  <navigator class='quick_item flex_af f_28 pr' url='../collage/collage'>
+    <form report-submit='true' class='formBtn' bindsubmit='bindsubmit'>
+      <button class='formBtn' form-type='submit'></button>
+    </form> 
+    <view class='mb_10 icon_item item1'>
+      <i class="iconfont icon-pintuangou"></i>
+    </view>
+    <text>拼团</text>
+  </navigator>
+  <view class='quick_item flex_af f_28 pr'>
+    <form report-submit='true' class='formBtn' data-ptime='{{ptime}}' bindsubmit='toSecKill'>
+      <button class='formBtn' form-type='submit'></button>
+    </form> 
+    <view class='mb_10 icon_item item2'>
+      <i class="iconfont icon-miaosha"></i>
+    </view>
+    <text>秒杀</text>
+  </view>
+  <view class='quick_item flex_af f_28 pr'>
+    <form report-submit='true' class='formBtn' data-type='1' bindsubmit='listPage'>
+      <button class='formBtn' form-type='submit'></button>
+    </form> 
+    <view class='mb_10 icon_item item3'>
+      <i class="iconfont icon-zhekou"></i>
+    </view>
+    <text>折扣</text>
+  </view>
+</view>
+<view class='bor_bom special_column' wx:if="{{money_off!=''||discount!=''}}">
+  <view class='flex_cb p_20 f_30 bor_b mb_10'>
+    <view class='flex_i'>
+      <i class="iconfont icon-weibiaoti2fuzhi02 mr_10 left"></i>
+      <text class='c_ea5'>专享优惠券</text> 
+    </view>
+    <navigator class='flex_i f_28 pr' url="../consumer/consumer">
+      <form report-submit='true' class='formBtn' bindsubmit='bindsubmit'>
+        <button class='formBtn' form-type='submit'></button>
+      </form> 
+      更多
+      <i class="iconfont icon-xiangyoujiantou"></i>
+    </navigator>
+  </view>
+  <scroll-view scroll-x="true" class='scroll-view_H'>
+    <view wx:for="{{money_off}}" wx:key="{{money_off}}" wx:for-item="itemName" class='couponList p_20 c_f {{itemName.status!=0?"on":""}} pr'>
+      <form report-submit='true' class='formBtn' data-coupon_id="{{itemName.coupon_id}}" bindsubmit='toVoucher'>
+        <button class='formBtn' form-type='submit'></button>
+      </form> 
+      <view class='conpon_left mr_20 flex_faj'>
+        <view class='flex f_28 mb_10'>
+          ￥
+          <text class='money'>{{itemName.money}}</text>
+        </view>
+        <view class='f_24'>满{{itemName.condition}}可用</view>
+      </view>
+      <view class='ling f_28 mt_10'>
+        <view wx:if="{{itemName.status==0}}">
+          <view>立即</view>
+          <view>领取</view>
+        </view> 
+        <view wx:else>
+          <view>已</view>
+          <view>领</view>
+        </view> 
+      </view>
+    </view>
+  </scroll-view>
+  <scroll-view scroll-x="true" class='scroll-view_H'>
+    <view wx:for="{{discount}}" wx:key="{{discount}}" wx:for-item="itemName" class='couponList zhekou p_20 c_f {{itemName.status!=0?"on":""}} pr'>
+      <form report-submit='true' class='formBtn' data-coupon_id="{{itemName.coupon_id}}" bindsubmit='toVoucher'>
+        <button class='formBtn' form-type='submit'></button>
+      </form>
+      <view class='conpon_left mr_20 flex_faj'>
+        <view class='flex f_28 mb_10'>
+          <text class='money ml_20'>{{itemName.discount}}</text>折
+        </view>
+        <view class='f_24'>满{{itemName.condition}}可用</view>
+      </view>
+      <view class='ling f_28 mt_10'>
+        <view wx:if="{{itemName.status==0}}">
+          <view>立即</view>
+          <view>领取</view>
+        </view> 
+        <view wx:else>
+          <view>已</view>
+          <view>领</view>
+        </view> 
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<view class='bor_bom special_column'>
+  <view class='flex_cb p_20 f_30'>
+    <view class='flex_i'>
+      <i class="iconfont icon-miaosha mr_10 left"></i>
+      <text class='c_ea5 mr_20'>整点秒杀</text> 
+      <text wx:if="{{hasSecKill==0}}">暂无秒杀活动</text>
+      <text wx:else>距离活动结束{{times}}</text>
+    </view>
+    <view class='flex_i f_28 pr'>
+      <form report-submit='true' class='formBtn' data-ptime='{{ptime}}' bindsubmit='toSecKill'>
+        <button class='formBtn' form-type='submit'></button>
+      </form>
+      更多
+      <i class="iconfont icon-xiangyoujiantou"></i>
+    </view>
+  </view>
+</view>
+<view class='pr advert' wx:for="{{adList}}" wx:key="{{imgUrls}}">
+  <form report-submit='true' class='formBtn' data-id='{{item.product_id}}' data-type="0" bindsubmit='details'>
+    <button class='formBtn' form-type='submit'></button>
+  </form>
+  <view class='guang'>{{item.title}}</view>
+  <image src='{{item.pic}}'></image>
+</view>
+<view class='flex_ja f_32 p_20 bor_b'>
+- 今日推荐 -
+</view>
+<view class="items-body flex_f">
+  <view wx:for="{{itemsList}}" wx:key="{{itemName}}" wx:for-item="itemName" class='item_list p_20 bor_b pr'>
+    <form report-submit='true' class='formBtn' data-id='{{itemName.id}}' data-type='0' bindsubmit='details'>
+      <button class='formBtn' form-type='submit'></button>
+    </form>
+    <view class="item-img mb_20">
+      <image class="lazy" src="{{itemName.pic}}" />
+    </view>
+    <view class='sheng2 f_32 mb_20'>{{itemName.name}}</view>
+    <view class='flex_i f_30'><view class="price">{{itemName.price}}</view><view class="text_l c_999 ml_20" wx:if="{{itemName.is_discount==1}}">{{itemName.discount_before}}</view></view>
+  </view>
+</view>
+<view class='tool_icon'>
+  <image src="../../images/tool1.png" class="img-style image" animation="{{animCollect}}" bindtap="call"></image>
+  <view class="img-style kefu flex_faj" animation="{{animTranspond}}">
+    <image src="../../images/tool2.png" class='img_li'></image>
+    <button open-type="contact" class="details_btn"></button>
+  </view>
+  <image src="../../images/tool.png" class="img-plus-style image" animation="{{animPlus}}" bindtap="plus"></image>
+</view>
+<navigator class='flex_af f_28 p_40' target="miniProgram" open-type="navigate" appId="wx1773ca9a5221af5b">技术支持 @ 风擎网络科技</navigator>
+<view class='redrnvelopes flex_af' hidden='{{redrnvelopesClose}}'>
+  <view class='red_shu'></view>
+  <view class='red_img'>
+    <image src='../../images/redrnvelopes.png'></image>
+    <view class='goRedrnvelopes' bindtap='consumer'></view>
+  </view>
+  <i class="iconfont icon-cha red_iocn" bindtap="redrnvelopesClose"></i>
+</view>

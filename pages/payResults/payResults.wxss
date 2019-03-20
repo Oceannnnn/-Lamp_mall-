@@ -1,0 +1,7 @@
+/* pages/payResults/payResults.wxss */
+.payResults{
+  margin-top: 200rpx;
+}
+.success{
+  margin-bottom: 40rpx;
+}

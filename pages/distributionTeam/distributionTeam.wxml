@@ -1,0 +1,11 @@
+<!--pages/distributionTeam/distributionTeam.wxml-->
+<view wx:if="{{team!=''}}">
+  <view class='team' wx:for="{{team}}" wx:key="{{itemName}}" wx:for-item="itemName" class='p_20 bor_b flex_i f_30'>
+    <image src='{{itemName.head_img}}' class='team_img mr_20'></image>
+    <text>{{itemName.name}}</text>
+  </view>
+</view>
+<view wx:else class='flex_af'>
+  <image src='../../images/zanwu.png' class='zanwu mb_20'></image>
+  <text class='f_32 c_999'>暂无团队</text>
+</view>
